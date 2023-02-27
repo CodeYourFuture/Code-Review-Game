@@ -16,33 +16,34 @@ class GameBoard extends LitElement {
     this.gameState = {
       round: 1,
       score: 0,
-      startingCode: '',
-      cardsPlayed: [],
-      commentCards: [],
-      codeCards: [],
+      startingCode: 'HI',
+      playedCards: [],
+      commentHand: [],
+      codeHand: [],
+      role: '',
     };
   }
 
   async startNewRound() {
-    const { commentCard, codeCards } = await startRound();
-    this.gameState.commentCards = [commentCard];
-    this.gameState.codeCards = codeCards;
-    this.gameState.cardsPlayed.push(commentCard);
-    // eslint-disable-next-line no-plusplus
-    this.gameState.round++;
+    const { commentHand, codeHand } = await startRound();
+    this.gameState.role = 'commenter';
+    this.gameState.commentHand = commentHand;
+    this.gameState.codeHand = codeHand;
+    this.gameState.playedCards.push(startingCode);
+    this.gameState.round += 1;
     this.requestUpdate();
   }
 
   render() {
-    const { round, score, cardsPlayed, commentCards, codeCards } =
+    const { round, score, playedCards, commentHand, codeHand, role } =
       this.gameState;
 
     return html`
       <main aria-label="Game Board.">
         <score-board .round=${round} .score=${score}></score-board>
-        <discard-pile .cards=${cardsPlayed}></discard-pile>
-        <card-hand .cards=${commentCards}></card-hand>
-        <card-hand .cards=${codeCards}></card-hand>
+        <discard-pile .playedCards=${playedCards}></discard-pile>
+        <card-hand .cards=${commentHand} .player=${role}></card-hand>
+        <card-hand .cards=${codeHand} .player=${role}></card-hand>
       </main>
     `;
   }

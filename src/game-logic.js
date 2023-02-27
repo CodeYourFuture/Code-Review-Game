@@ -7,40 +7,32 @@ const GameLogic = {
     fetch('/changes')
       .then(response => response.json())
       .then(data => {
-        this.startingCode = data;
+        this.codeCards = data;
       })
       .catch(error => error);
 
-    // Load the comment cards for Alf from the server and log errors without console
+    // Load the comment cards for Alf from the server
     fetch('/comments')
       .then(response => response.json())
       .then(data => {
         this.commentCards = data;
       })
       .catch(error => error);
-
-    // Load the code change cards for Betty from the server and log errors without console
-    fetch('/changes')
-      .then(response => response.json())
-      .then(data => {
-        this.codeChangeCards = data;
-      })
-      .catch(error => error);
   },
 
   // Start a new round
   startRound() {
+    // get the starting code for the round
+    const startingCode = codeCards.filter('isStartingCode');
     // Shuffle an array of cards
     const shuffleCards = cards => cards.sort(() => Math.random() - 0.5);
     // Get the number of cards each player gets in a round
     const getCardsPerRound = () => this.state.round * 2 + 1;
     // Deal cards to each player
-    this.commenterHand = shuffleCards(
+    this.commentHand = shuffleCards(
       this.commentCards.splice(0, getCardsPerRound())
     );
-    this.coderHand = shuffleCards(
-      this.codeChangeCards.splice(0, getCardsPerRound())
-    );
+    this.codeHand = shuffleCards(this.codeCards.splice(0, getCardsPerRound()));
   },
   playCard(cardIndex, hand, state) {
     const play = state.hand[cardIndex];
