@@ -1,11 +1,9 @@
 import { LitElement, html } from 'lit';
 
-class commentCard extends LitElement {
+class CommentCard extends LitElement {
   static get properties() {
     return {
-      text: { type: String },
-      category: { type: String },
-      cardId: { type: Number },
+      card: { type: Object },
     };
   }
 
@@ -13,15 +11,16 @@ class commentCard extends LitElement {
     return html`
       <section
         class="card card--comment"
-        id="id__${this.cardId}"
-        data-id="{cardId}"
+        id="id__${this.id}"
+        data-id="{card.id}"
+        aria-label="Card."
       >
-        <h3 class="card__title">Comment</h3>
-        <p class="card__text">{text}</p>
-        <h4 class="card__category">{category}</h4>
+        <h3 class="card__title">Comment card</h3>
+        <p class="card__text">{card.text}</p>
+        <h4 class="card__category">{card.category}</h4>
       </section>
     `;
   }
 }
 
-customElements.define('comment-card', commentCard);
+customElements.define('code-card', CommentCard);

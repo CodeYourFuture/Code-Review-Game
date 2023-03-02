@@ -1,0 +1,38 @@
+[
+  {
+  "code": "const fn=(a,b)=>{a.map((x)=>x+b)}",
+  "tests": "some unit tests, which may or may not pass",
+  "id": "code-00001",
+  "problems": {
+    "style": [],
+    "function": []
+  }
+  },
+  {
+  "code": "const fn=(a,b)=>{a.map((x)=>x+b)}",
+  "tests": "some unit tests, which may or may not pass",
+  "id": "code-00002",
+  "problems": {
+    "style": [],
+    "function": []
+  }
+},
+  {
+  "code": "const fn=(a,b)=>{a.map((x)=>x+b)}",
+  "tests": "some unit tests, which may or may not pass",
+  "id": "code-00003",
+  "problems": {
+    "style": [],
+    "function": []
+  }
+},
+  {
+  "code": "const fn=(a,b)=>{a.map((x)=>x+b)}",
+  "tests": "some unit tests, which may or may not pass",
+  "id": "code-00004",
+  "problems": {
+    "style": [],
+    "function": []
+  }
+  }
+]

@@ -1,26 +1,32 @@
+// this components renders a list of cards
+// cards can be removed from this array by dragging them to the discard pile
+// the discard pile component will handle the logic for removing cards from the array
+// the card component will handle the logic for dragging cards
+// this array is an array of objects
 import { LitElement, html } from 'lit';
 
 class CardHand extends LitElement {
-  static get properties() {
-    return {
-      cards: { type: Array },
-      player: { type: String },
-    };
+  static properties = {
+    cards: { type: Array },
+  };
+
+  constructor() {
+    super();
+    this.cards = [];
   }
 
   render() {
     return html`
-      <ul class="hand">
-        ${this.cards.map(
-          (card, index) => html`
-            <li class="hand__card" data-index=${index}>
-              ${this.player === 'commenter'
-                ? html`<comment-card .card=${card}></comment-card>`
-                : html`<code-card .card=${card}></code-card>`}
-            </li>
-          `
-        )}
-      </ul>
+      <section class="hand" aria-label="Card Hand.">
+        <ul class="hand__list">
+          ${this.cards.map(
+            cardData =>
+              html`<li class="hand__item">
+                <game-card .cardData=${cardData}></game-card>
+              </li>`
+          )}
+        </ul>
+      </section>
     `;
   }
 }

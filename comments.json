@@ -1,0 +1,39 @@
+[
+    {
+        "id":  "comment-00001",
+        "text": "Have you installed Prettier? The style guide can help you do this: <a href=''>Linting</a>"
+    },
+    {
+        "id":  "comment-00002",
+        "text": "Do these variable names make it easier to understand what the code should do, or harder? The style guide explains this idea in more detail: <a href=''>Naming things</a>"
+    },
+    {
+        "id":  "comment-00003",
+        "text": "When I run this function, I get `undefined`. Should it return something?"
+    },
+    {
+        "id": "comment-00004",
+        "text": "This function is very long. Can you break it up into smaller functions?"
+
+    },
+    {
+        "id": "comment-00005",
+        "text": "When I run the tests, I get an error. Can you see why?"
+    },
+    {
+        "id": "comment-00006",
+        "text": "This code works, but I'm not sure it meets the requirements. Can you check?"
+    },
+    {
+        "id": "comment-00007",
+        "text": "This code seems to have a lot of repeated lines. Can you think of a way to make it more DRY?"
+    },
+    { 
+        "id": "comment-00008",
+        "text": "Great job! I'm not sure what to suggest, but I'm sure you can find something to improve."
+    },
+    {
+        "id": "comment-00009",
+        "text": "I understand now why this code is necessary. Can you add some comments to explain why you've written it like this?"
+    }   
+]

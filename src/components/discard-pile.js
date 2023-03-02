@@ -1,22 +1,37 @@
 import { LitElement, html } from 'lit';
+import { playCard } from '../game-logic.js';
 
-export class DiscardPile extends LitElement {
-  static get properties() {
-    return {
-      playedCards: { type: Array },
-    };
-  }
+class DiscardPile extends LitElement {
+  static properties = {
+    playedCards: { type: Array },
+  };
 
   constructor() {
     super();
     this.playedCards = [];
   }
 
+  handleDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }
+
+  handleDrop(event) {
+    const cardId = event.dataTransfer.getData('text/plain');
+    event.preventDefault();
+    playCard(cardId);
+  }
+
   render() {
     return html`
-      <section class="discards" aria-label="Discard Pile">
+      <section
+        class="discards"
+        aria-label="Discard Pile."
+        @dragover=${this.handleDragOver}
+        @drop=${this.handleDrop}
+      >
         ${this.playedCards.map(
-          card => html`<card-element .card=${card}></card-element>`
+          cardData => html`<game-card .cardData=${cardData}></game-card>`
         )}
       </section>
     `;
