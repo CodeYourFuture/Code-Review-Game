@@ -1,4 +1,3 @@
-// Initialise state
 const initialState = {
   round: 1,
   score: 0,
@@ -15,14 +14,12 @@ const initialState = {
   updatedCode: '',
 };
 
-// Load the code change cards from the server async fetch
 async function getChanges() {
   const response = await fetch('http://localhost:8000/changes.json');
   const data = await response.json();
   return data.codeCards;
 }
 
-// Load the comment cards from the server async fetch
 async function getComments() {
   const response = await fetch('http://localhost:8000/comments.json');
   const data = await response.json();
@@ -49,7 +46,6 @@ function startNewRound({ gameState }) {
   return dealCards(newGameState);
 }
 
-// Deal cards to each player
 function dealCards(gameState) {
   const { commentHand, codeHand, round, startingCode } = gameState;
   const commentCards = shuffleCards(
@@ -64,42 +60,35 @@ function dealCards(gameState) {
   };
 }
 
-// Play a card and update the game state
 function playCard(cardIndex, hand, gameState, updateGameState) {
   const playedCard = hand[cardIndex];
   const remainingHand = hand.filter((_, index) => index !== cardIndex);
   const playedCards = [...gameState.playedCards, playedCard];
+
+  const isCodeHand = hand === gameState.codeHand;
+
   const newGameState = {
     ...gameState,
     playedCards,
-    [hand === gameState.codeHand ? 'updatedCode' : 'updatedComment']:
-      playedCard,
-    [hand === gameState.codeHand ? 'role' : '']:
-      hand === gameState.codeHand ? 'commenter' : '',
-    [hand === gameState.commentHand ? 'score' : '']:
-      hand === gameState.commentHand ? gameState.score + 1 : gameState.score,
-    [hand === gameState.commentHand ? 'role' : '']:
-      hand === gameState.commentHand ? 'coder' : '',
-    [hand === gameState.commentHand ? 'codeCards' : 'commentCards']:
-      hand === gameState.commentHand
-        ? gameState.codeCards
-        : gameState.commentCards,
-    remainingCommentHand:
-      hand === gameState.commentHand
-        ? remainingHand
-        : gameState.remainingCommentHand,
-    remainingCodeHand:
-      hand === gameState.codeHand ? remainingHand : gameState.remainingCodeHand,
+    updatedCode: isCodeHand ? playedCard : gameState.updatedCode,
+    updatedComment: !isCodeHand ? playedCard : gameState.updatedComment,
+    role: isCodeHand ? 'commenter' : 'coder',
+    score: !isCodeHand ? gameState.score + 1 : gameState.score,
+    codeCards: gameState.codeCards,
+    commentCards: gameState.commentCards,
+    remainingCommentHand: !isCodeHand
+      ? remainingHand
+      : gameState.remainingCommentHand,
+    remainingCodeHand: isCodeHand ? remainingHand : gameState.remainingCodeHand,
   };
+
   updateGameState(newGameState);
 }
 
-// Shuffle the cards
 function shuffleCards(cards) {
   return cards.sort(() => Math.random() - 0.5);
 }
 
-// Get the number of cards to deal per round
 function getCardsPerRound(round) {
   return round * 2 + 1;
 }

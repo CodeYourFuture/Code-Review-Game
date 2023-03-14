@@ -31,7 +31,7 @@ class GameBoard extends LitElement {
 
   async handleStartNewRound(gameState) {
     console.log('gameState before startNewRound:', gameState);
-    startNewRound(this.gameState);
+    this.gameState = startNewRound({ gameState });
     this.requestUpdate();
   }
 
@@ -66,7 +66,7 @@ class GameBoard extends LitElement {
           @play-card=${event =>
             this.handlePlayCard('codeHand', event.detail.cardIndex)}
         ></card-hand>
-        <button @click=${() => this.handleStartNewRound()}>
+        <button @click=${() => this.handleStartNewRound(this.gameState)}>
           Start New Round
         </button>
       </main>
