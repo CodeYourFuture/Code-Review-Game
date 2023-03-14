@@ -21,11 +21,17 @@ class GameBoard extends LitElement {
     this.gameState = { ...initialState };
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
     //get the cards from the server
     if (!this.gameState.codeHand.length || !this.gameState.commentHand.length) {
-      fetchGameData();
+      const { codeCards, commentCards } = await fetchGameData();
+      this.gameState = {
+        ...this.gameState,
+        codeHand: codeCards,
+        commentHand: commentCards,
+      };
+      this.requestUpdate();
     }
   }
 
