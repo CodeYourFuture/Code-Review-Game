@@ -1,8 +1,6 @@
 import { LitElement, html } from 'lit';
-// this card wrapper can render either a code card or a comment card
-// depending on the player's role
-// all the shared functions of a playable card are defined here
-class Card extends LitElement {
+
+class GameCard extends LitElement {
   static properties = {
     cardData: { type: Object },
     playerRole: { type: String },
@@ -11,6 +9,7 @@ class Card extends LitElement {
   constructor() {
     super();
     this.cardData = {};
+    this.playerRole = '';
   }
 
   handleDragStart(event) {
@@ -22,9 +21,11 @@ class Card extends LitElement {
     return html`
       <div class="card" draggable="true" @dragstart=${this.handleDragStart}>
         ${this.playerRole === 'commenter'
-          ? html`<comment-card .card=${card}></comment-card>`
-          : html`<code-card .card=${card}></code-card>`}
+          ? html`<comment-card .card=${this.cardData}></comment-card>`
+          : html`<code-card .card=${this.cardData}></code-card>`}
       </div>
     `;
   }
 }
+
+customElements.define('game-card', GameCard);
